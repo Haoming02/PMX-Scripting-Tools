@@ -1,42 +1,17 @@
 from typing import Dict, List
 
-_SCRIPT_VERSION = "Script version:  Nuthouse01 - v1.07.04 - 8/19/2021"
-# This code is free to use and re-distribute, but I cannot be held responsible for damages that it may or may not cause.
-#####################
+"""
+This file contains translation dictionaries that map Japanese words to English words.
+Some are from PMXEditor built-in translation; Some are from Google Translate; Some are by. Nuthouse01
+"""
 
-# this file contains TRANSLATION DICTIONARIES that map japanese """words""" to english """words""".
-# some of these came from PMXE builtin translate, some of these came from google translate, some of these I made up.
-
-# there is code at the bottom that will massage/refine the dictionaries as part of the import process, this is normally
-# a **super duper bad practice** but it's the best way i can come up with to ensure that all the dictionaries are
-# future-proof and idiot-proof. the refining will ensure 3 things:
-# 1) JP keys use fullwidth katakana (not halfwidth),
-# 2) JP keys don't contain any fullwidth versions of ASCII letters,
-# 3) the dictionaries are **SORTED** with the longest keys first.
-# 1 and 2 are to increase consistency/hitrate, so that more potential incoming names can fall into the same
-# existing buckets. 3 is necessary for the "piecewise_translate" function to work correctly, and I don't want to
-# sort the dict every single time I call that function. (NOTE: dictionaries remembering their "order" is a behavior
-# that only exists in python 3.6+)
-
-# technically I could just make the hardcoded definitions of the dicts obey these rules, instead of enforcing them
-# by executing code... but that would be too much maintenance. and I like being able to sort/group the items within
-# the dicts however I want to.
-
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-# dictionary for translating halfwitdth katakana to fullwidth katakana
-
-# halfwidth "
-# "		\uff9e
-# halfwidth deg *
-# *		\uff9f
 katakana_half_to_full_dict = {
 # dot
 '･': '・',
+
 # prolong
 'ｰ': 'ー',
+
 # aeiou big+small
 'ｧ': 'ァ',
 'ｨ': 'ィ',
@@ -48,15 +23,18 @@ katakana_half_to_full_dict = {
 'ｳ': 'ウ',
 'ｴ': 'エ',
 'ｵ': 'オ',
+
 # ya yu yo tu small
 'ｬ': 'ャ',
 'ｭ': 'ュ',
 'ｮ': 'ョ',
 'ｯ': 'ッ',
+
 # ya yu yo big
 'ﾔ': 'ヤ',
 'ﾕ': 'ユ',
 'ﾖ': 'ヨ',
+
 # pattern: x, x"
 'ｶ': 'カ',
 'ｶﾞ': 'ガ',
@@ -88,6 +66,7 @@ katakana_half_to_full_dict = {
 'ﾃﾞ': 'デ',
 'ﾄ': 'ト',
 'ﾄﾞ': 'ド',
+
 # x, x", x*
 'ﾊ': 'ハ',
 'ﾊﾞ': 'バ',
@@ -104,24 +83,28 @@ katakana_half_to_full_dict = {
 'ﾎ': 'ホ',
 'ﾎﾞ': 'ボ',
 'ﾎﾟ': 'ポ',
+
 # n sounds
 'ﾅ': 'ナ',
 'ﾆ': 'ニ',
 'ﾇ': 'ヌ',
 'ﾈ': 'ネ',
 'ﾉ': 'ノ',
+
 # m sounds
 'ﾏ': 'マ',
 'ﾐ': 'ミ',
 'ﾑ': 'ム',
 'ﾒ': 'メ',
 'ﾓ': 'モ',
+
 # r sounds
 'ﾗ': 'ラ',
 'ﾘ': 'リ',
 'ﾙ': 'ル',
 'ﾚ': 'レ',
 'ﾛ': 'ロ',
+
 # wa,wo,n,vu
 'ﾜ': 'ワ',
 'ﾜﾞ': 'ヷ',
@@ -129,11 +112,13 @@ katakana_half_to_full_dict = {
 'ｦﾞ': 'ヺ',
 'ﾝ': 'ン',
 'ｳﾞ': 'ヴ',
+
 #### fullwidth wi,we have no halfwidth counterpart at all
 # 30f0	30f0
 # 30f1	30f1
 'ヰﾞ': 'ヸ',
 'ヱﾞ': 'ヹ',
+
 # hiragana_small_to_big_dict
 'ぁ': 'あ',  # a
 'ぃ': 'い',  # i
@@ -142,22 +127,8 @@ katakana_half_to_full_dict = {
 'ぉ': 'お',  # o
 }
 
-#### wa, ka, ke have fullwidth small ver but only halfwidth counterpart is big ver
-#### only useful when going full -> half
-# ?ff9c	30ee
-# ?ff76	30f5
-# ?ff79	30f6
 
-
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-# exact-match dicts, plus also symbols_dict cuz it goes into morph_dict too
-# searched for exact matches because many of these names break translation "rules"
-# symbols_dict, morph_dict, frame_dict, bone_dict
-
-# this dict is added to both "words" and "morphs"... just in one place so I can keep thing straight
+# This dict is added to both "words" and "morphs"
 symbols_dict = {
 "×": "x",  # x0215 multiply symbol
 "↑": "^^^", # x2191, NOTE: backslashes work poorly so /\ doesn't work right
@@ -181,6 +152,7 @@ symbols_dict = {
 "◯": "O",  #x25ef
 "〇": "O",  # x3007
 }
+
 
 morph_dict = {
 "ω□": "w open",  # without this entry it translates to "w box", and i dont like that
@@ -263,8 +235,10 @@ morph_dict = {
 "涙": "tears",
 }
 
+
 # add the symbols into the morph dict
 morph_dict.update(symbols_dict)
+
 
 bone_dict =  {
 "操作中心": "view cnt",
@@ -331,7 +305,7 @@ bone_dict =  {
 "乳": "breast",  # translates to "breast" or "milk"??? idk man language is wierd
 }
 
-# these should be nicely capitalized
+
 frame_dict = {
 "センター": "Center",
 "ＩＫ": "IK",
@@ -359,12 +333,6 @@ frame_dict = {
 "握り-拡散": "Grip / Spread",
 }
 
-
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-# partial-match dict for piecewise translation
 
 words_dict = {
 # words
@@ -449,7 +417,6 @@ words_dict = {
 "飾り": "decoration", # either decoration or ornament
 "補助": "helper",
 "補正": "correction",
-
 "ブロック": "block", # literally burroku, not sure why he picked this name
 "花": "flower",
 "鳥": "bird",
@@ -575,7 +542,6 @@ words_dict = {
 "ちゃん": "-chan",  # for names
 "さん": "-san",  # for names
 
-
 # modifiers
 "先": "end",
 "親": "parent",
@@ -631,7 +597,6 @@ words_dict = {
 "つり": "slanted",  # "tsuri"
 "ツリ": "slanted",  # "tsuri"
 "悔しい": "frustrated",  # "Kuyashī"
-
 "穏やか": "calm",
 "螺旋": "spiral",
 "レイプ": "rape",  # "rape eyes" often mean "blank eyes"
@@ -645,7 +610,7 @@ words_dict = {
 "ナシ": "none",  # phonetically "nashi"
 "无": "none",
 "消えて": "disappear", # as in whole model disappear
-"消える": "disappear", 
+"消える": "disappear",
 "透明": "transparent",
 "透過": "transparent",
 "広げ": "wide", # literally "spread"
@@ -757,18 +722,13 @@ words_dict = {
 "ー": "--", # not sure what to do with this, often used to mean continuation of a sound/syllable...
 }
 
+
 # add the special symbols
 words_dict.update(symbols_dict)
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-# these dictionaries probably don't ever need to change... they're used in pretranslate section
 
 
-# these get appended to the end instead of being replaced in order
 prefix_dict = {
-"中": "_M",  # this one isn't truly standard but i like the left/right/middle symmetry
+"中": "_M",
 "右": "_R",
 "左": "_L",
 "親": " parent",
@@ -776,8 +736,6 @@ prefix_dict = {
 }
 
 
-# note that any "box drawing" symbol at the BEGINNING of a name will be treated as indent in pretranslate, i.e. does
-# not (and should not) be translated here.
 odd_punctuation_dict = {
 "’": "'",  # x2019
 "╱": "/",  # x2571 "box drawing" section.
@@ -814,11 +772,9 @@ odd_punctuation_dict = {
 "､": ",",  # xff64
 "･": "-",  # xff65
 }
-# note: "ー" = "katakana/hiragana prolonged sound mark" = 0x30fc should !!!NOT!!! be treated as punctuation cuz it shows up in several "words"
+
 
 # https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)
-# fullwidth chars like ０１２３ＩＫ are in range FF01–FF5E  and correspond to  21-7E, difference=(FEE0)
-# these are separate because they all have a definite, guaranteed, one-to-one match in the ASCII block
 ascii_full_to_basic_dict = {
 	'！': '!', '＂': '"', '＃': '#', '＄': '$', '％': '%', '＆': '&', '＇': "'", '（': '(', '）': ')', '＊': '*',
 	'＋': '+', '，': ',', '－': '-', '．': '.', '／': '/', '０': '0', '１': '1', '２': '2', '３': '3', '４': '4',
@@ -833,97 +789,91 @@ ascii_full_to_basic_dict = {
 }
 
 
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
+# ===== Utils =====
 
-# this is hte bit where i operate on all the dicts I defined above
 
-def sort_dict_with_longest_keys_first(D:Dict[str,str]) -> Dict[str,str]:
-	L_D = [tuple(x) for x in D.items()]
+def sort_dict_with_longest_keys_first(dictionary:Dict[str,str]) -> Dict[str,str]:
+	L_D = [tuple(x) for x in dictionary.items()]
 	L_D.sort(reverse=True, key=lambda x: len(x[0]))
-	D_L_D = dict(L_D)
-	return D_L_D
 
-def invert_dict(D:Dict[str,str]) -> Dict[str,str]:
-	inv = {v: k for k, v in D.items()}
+	return dict(L_D)
+
+def invert_dict(dictionary:Dict[str,str]) -> Dict[str,str]:
+	inv = {v: k for k, v in dictionary.items()}
+
 	return inv
 
-def _piecewise_translate(in_list: List[str], in_dict: Dict[str, str]):
-	"""
-	Needed to put a (modified) copy of this function in this file, to fix recursive import problem
-	"""
+def piecewise(in_list: List[str], in_dict: Dict[str, str]) -> list:
 	outlist = []  # list to build & return
-	
+
 	dictitems = list(in_dict.items())
-	
+
 	for out in in_list:
 		if (not out) or out.isspace():  # support bad/missing data
 			outlist.append("JP_NULL")
 			continue
+
 		# goal: substrings that match keys of "words_dict" get replaced
 		# starting from each char position, try to match against the contents of the dict. longest items are first!
 		i = 0
 		while i < len(out):  # starting from each char of the string,
 			found_match = False
+
 			for (key, val) in dictitems:  # try to find anything in the dict to match against,
 				if out.startswith(key, i):  # and if something is found starting from 'i',
 					found_match = True
+
 					# i am going to replace it key->val
 					out = out[0:i] + val + out[i + len(key):]
+
 					# i don't need to examine or try to replace on any of these chars, so skip ahead a bit
 					i += len(val)
+
 					# nothing else will match here, since I just replaced the thing, so break out of iterating on dict keys
 					break
+
 			if found_match is False:
 				i += 1
+
 		# once all uses of all keys have been replaced, then append the result
 		outlist.append(out)
-	
-	return outlist  # return as a list
+
+	return outlist
 
 def consolidate_dict_keys(D: Dict[str, str], consolidate: Dict[str, str]) -> Dict[str, str]:
 	"""
-	Use dict "consolidate" to modify the KEYS of D. If a key in D is changed, but the new key also existed in that
-	dict, that is a "collision". If the old key's value and the existing key's value are the same, there's no problem.
+	Use dict "consolidate" to modify the KEYS of D. If a key in D is changed,
+	but the new key also existed in that dict, that is a "collision."
+	If the old key's value and the existing key's value are the same, there's no problem.
 	If they are different, then print a warning because it's a problem that needs to be manually resolved.
 	"""
+
 	newdict = {}
 	keys = list(D.keys())
 	values = list(D.values())
+
 	# translate all the halfwidth chars to their fullwidth forms
-	keys_full = _piecewise_translate(keys, consolidate)
+	keys_full = piecewise(keys, consolidate)
 	for K, KF, V in zip(keys, keys_full, values):
 		if K == KF:
 			# K did not contain any halfwitdth stuff, no change
 			newdict[K] = V
+
 		else:
 			# K did contain halfwidth stuff and did change
 			newdict[KF] = V
+
 			# if KF was already in the dict, and KF has a different value than K, then we've got a problem
 			# if KF was already in the dict but it had the same value as K, then there's no problem
 			# print("'%s' -> '%s'" % (K, KF))
 			if KF in keys and D[K] != D[KF]:
 				print("key consolidation conflict! key='%s' value**='%s', key_new='%s' value_new='%s'" % (K, D[K], KF, D[KF]))
+
 	return newdict
 
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
 
+# ===== Set Up =====
 
-# 1. each dict should be sorted with longest keys first, to fix the "undershadowing" problem
-# this way the longest & best match for the exact thing i'm trying to replace gets used
-
-# 2. convert the keys of each dict from using fullwidth ALPHANUMERIC characters to using the basic ASCII versions
-# fullwidth chars like ０１２３ＩＫ are in range FF01–FF5E  and correspond to  21-7E, difference=(FEE0)
-# this is to match pretranslate and increase the hit rate
-
-# 3. convert the keys of each dict from halfwidth kanji to fullwidth kanji
-# this is just for consistency and standardization
-# this is to match pretranslate and increase the hit rate
 
 katakana_half_to_full_dict = sort_dict_with_longest_keys_first(katakana_half_to_full_dict)
 ascii_full_to_basic_dict = sort_dict_with_longest_keys_first(ascii_full_to_basic_dict)
@@ -943,6 +893,3 @@ bone_dict = consolidate_dict_keys(bone_dict, katakana_half_to_full_dict)
 frame_dict = sort_dict_with_longest_keys_first(frame_dict)
 frame_dict = consolidate_dict_keys(frame_dict, ascii_full_to_basic_dict)
 frame_dict = consolidate_dict_keys(frame_dict, katakana_half_to_full_dict)
-
-
-# FINALLY DONE

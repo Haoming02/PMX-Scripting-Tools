@@ -8,3 +8,6 @@ Edited by. <b>Haoming</b> - <code>2023 Dec.</code>
 
 <h1 align="center">W.I.P</h1>
 <p align="center">Planning to organize and modularize the scripts for easier usages</p>
+
+#### Progress
+- [X] Translation is usable *(GoogleTranslation support is removed)*
