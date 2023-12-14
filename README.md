@@ -11,3 +11,4 @@ Edited by. <b>Haoming</b> - <code>2023 Dec.</code>
 
 #### Progress
 - [X] Translation is usable *(GoogleTranslation support is removed)*
+- [X] Separate Core logics

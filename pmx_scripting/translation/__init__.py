@@ -5,7 +5,7 @@ Original Dictionaries by. Nuthouse01
 
 For non-standard words, just use ChatGPT...
 
-Usage:
+USAGE:
 from translation import translate
 """
 
@@ -16,7 +16,7 @@ def translate(in_list: str, DEBUG:bool = False) -> str:
 	"""
 	Simple wrapper function to run both pre_translate and local_translate using words_dict.
 
-	Accepts List of String as well~
+	Accepts either a string or a list of string
 	"""
 
 	input_is_str = isinstance(in_list, str)

@@ -16,7 +16,7 @@ fullwidth_dict_ord =       dict((ord(k), v) for k, v in ascii_full_to_basic_dict
 STANDARD_INDENT = "  "
 
 
-##### Regular Expression Patterns #####
+# ===== Regular Expression Patterns =====
 # indent: whitespace or _ or anything from unicode box-drawing symbols block
 indent_pattern = "^[\\s_\u2500-\u257f]+"
 indent_pattern_re = re.compile(indent_pattern)
@@ -34,7 +34,7 @@ suffix_pattern_re = re.compile(padding_pattern + suffix_pattern)
 
 
 # https://www.compart.com/en/unicode/block
-jp_pattern = "\u3040-\u30ff"  # "hiragana" block + "katakana" block
+jp_pattern =  "\u3040-\u30ff"  # "hiragana" block + "katakana" block
 jp_pattern += "\u3000-\u303f"  # "cjk symbols and punctuation" block, fullwidth space, brackets, etc etc
 jp_pattern += "\u3400-\u4dbf"  # "cjk unified ideographs extension A"
 jp_pattern += "\u4e00-\u9fff"  # "cjk unified ideographs"
@@ -90,9 +90,9 @@ def pre_translate(in_list: STR_OR_STRLIST) -> Tuple[STR_OR_STRLIST, STR_OR_STRLI
 	input_is_str = isinstance(in_list, str)
 	if input_is_str: in_list = [in_list]
 
-	indent_list = []  # list to build & return
-	body_list = []  # list to build & return
-	suffix_list = []  # list to build & return
+	indent_list = []	# list to build & return
+	body_list = []		# list to build & return
+	suffix_list = []	# list to build & return
 
 	for s in in_list:
 		# 1: subst JP/fullwidth alphanumeric chars -> standard EN alphanumeric chars
