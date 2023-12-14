@@ -2,8 +2,8 @@
 Math Functions used across multiple scripts
 """
 
-import math
 from typing import Tuple, Sequence, List
+import math
 
 
 # ===== Fundamental Math Operations =====

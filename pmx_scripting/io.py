@@ -1,10 +1,10 @@
+from .core import MY_PRINT_FUNC
+
+from typing import Any, List
+from os import path
+import stat
 import csv
 import os
-import stat
-from os import path
-from typing import Any, List
-
-from .core import MY_PRINT_FUNC
 
 
 # ===== Functions for CSV and Binary-File read/write =====

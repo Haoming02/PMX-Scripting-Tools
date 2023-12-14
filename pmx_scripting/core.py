@@ -1,10 +1,30 @@
-import sys
-import traceback
+from typing import Tuple, Sequence, Callable, Iterable, TypeVar, Union, List, Any
+from bisect import bisect_left
 from os import path, listdir
-from typing import Tuple, Sequence, Callable, Iterable, TypeVar, Union, List
+import traceback
+import sys
 
 # Declare Type Hint so "output type matches whatever input type is" can be possible
 THING = TypeVar('THING')
+
+
+# ===== Searching through sorted lists for MASSIVE speedup =====
+
+def binary_search_isin(x: Any, a: Sequence[Any]) -> bool:
+	"""
+	If x is in a, return True. Otherwise return False. a must be in ascending sorted order.
+	"""
+
+	pos = bisect_left(a, x)  # find insertion position
+	return True if pos != len(a) and a[pos] == x else False  # don't walk off the end
+
+def binary_search_wherein(x: Any, a: Sequence[Any]) -> int:
+	"""
+	If x is in a, return its index. Otherwise return -1. a must be in ascending sorted order.
+	"""
+
+	pos = bisect_left(a, x)  # find insertion position
+	return pos if pos != len(a) and a[pos] == x else -1  # don't walk off the end
 
 
 # ===== Misc Functions and User-Input Functions =====

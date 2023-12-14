@@ -1,10 +1,9 @@
-import math
-import struct
-from collections import defaultdict
-from typing import Any
-
 from .core import MY_JUSTIFY_STRINGLIST, MY_PRINT_FUNC
 
+from collections import defaultdict
+from typing import Any
+import struct
+import math
 
 # ===== Functions for Binary-File packing & unpacking =====
 
