@@ -57,10 +57,10 @@ def bonedeform_fix(pmx: pmxstruct.Pmx, moreinfo=False):
 			# is me in the IK group of the parent? me is the ikmaster or me shares an ikmaster with parent
 			# if this IS in the ik group then DON'T overwrite parent_idx
 			if not (me_idx in ikmasters[parent_idx] or ikmasters[me_idx].intersection(ikmasters[parent_idx])):
-				l = list(ikmasters[parent_idx]) # turn set into list
-				l.sort() # sort by bone order, tiebreaker
-				l.sort(key=lambda x: deforms[x]) # sort by deform level, primary sort
-				parent_idx = l[-1] # this means the parent is the last-deforming master of any masters of the bone
+				ik_list = list(ikmasters[parent_idx]) # turn set into list
+				ik_list.sort() # sort by bone order, tiebreaker
+				ik_list.sort(key=lambda x: deforms[x]) # sort by deform level, primary sort
+				parent_idx = ik_list[-1] # this means the parent is the last-deforming master of any masters of the bone
 
 		# "after" means idx>source and layer >= source or idx<source and layer > source
 		# note: if somehow me_idx == parent_idx this returns true to prevent infinite looping

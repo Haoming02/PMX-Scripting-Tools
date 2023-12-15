@@ -74,7 +74,7 @@ def my_list_search(searchme: Iterable[THING], condition: Callable[[THING], bool]
 	return None
 
 
-def my_list_partition(l: Iterable[THING], condition: Callable[[THING], bool]) -> Tuple[List[THING], List[THING]]:
+def my_list_partition(input_list: Iterable[THING], condition: Callable[[THING], bool]) -> Tuple[List[THING], List[THING]]:
 	"""
 	Split one list into two NEW lists based on a condition. Kinda like a list comprehension but it produces 2 results.
 
@@ -84,7 +84,7 @@ def my_list_partition(l: Iterable[THING], condition: Callable[[THING], bool]) ->
 	list_where_true = []
 	list_where_false = []
 
-	for iiiii in l:
+	for iiiii in input_list:
 		if condition(iiiii):
 			list_where_true.append(iiiii)
 		else:

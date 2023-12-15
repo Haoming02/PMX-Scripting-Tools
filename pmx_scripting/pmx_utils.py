@@ -406,7 +406,7 @@ def vert_delete_and_remap(pmx: pmxstruct.Pmx, vert_dellist: List[int], vert_shif
 
 	for morph in pmx.morphs:
 		# if not a vertex morph or UV morph, skip it
-		if not morph.morphtype in (pmxstruct.MorphType.VERTEX,
+		if morph.morphtype not in (pmxstruct.MorphType.VERTEX,
 								   pmxstruct.MorphType.UV,
 								   pmxstruct.MorphType.UV_EXT1,
 								   pmxstruct.MorphType.UV_EXT2,
