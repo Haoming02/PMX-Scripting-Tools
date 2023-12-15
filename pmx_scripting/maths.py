@@ -48,7 +48,7 @@ def bidirectional_clamp(val: float, a: float, b: float) -> float:
 	return clamp(val, a, b) if a < b else clamp(val, b, a)
 
 
-def my_dot(v0: Sequence[float], v1: Sequence[float]) -> float:
+def dot(v0: Sequence[float], v1: Sequence[float]) -> float:
 	"""
 	Perform mathematical dot product between two same-length vectors. IE component-wise multiply, then sum.
 
@@ -62,14 +62,14 @@ def my_dot(v0: Sequence[float], v1: Sequence[float]) -> float:
 	return dot
 
 
-def my_euclidian_distance(x: Sequence[float]) -> float:
+def euclidian_distance(x: Sequence[float]) -> float:
 	"""
 	Calculate Euclidian distance (square each component, sum, and square root).
 
 	:param x: list/tuple, any number of floats
 	:return: single float
 	"""
-	return math.sqrt(my_dot(x, x))
+	return math.sqrt(dot(x, x))
 
 
 def normalize_distance(foo: Sequence[float]) -> List[float]:
@@ -79,7 +79,7 @@ def normalize_distance(foo: Sequence[float]) -> List[float]:
 	:param foo: list/tuple, any number of floats
 	:return: list of floats
 	"""
-	LLL = my_euclidian_distance(foo)
+	LLL = euclidian_distance(foo)
 	return [t / LLL for t in foo]
 
 
@@ -96,7 +96,7 @@ def normalize_sum(foo: Sequence[float]) -> List[float]:
 
 # ===== Advanced Geometric Math Functions =====
 
-def my_projection(x: Sequence[float], y: Sequence[float]) -> Tuple[float,float,float]:
+def projection(x: Sequence[float], y: Sequence[float]) -> Tuple[float,float,float]:
 	"""
 	Project 3D vector X onto vector Y, i.e. the component of X that is parallel with Y.
 
@@ -104,13 +104,13 @@ def my_projection(x: Sequence[float], y: Sequence[float]) -> Tuple[float,float,f
 	:param y: 3x float X Y Z
 	:return: 3x float X Y Z
 	"""
-	# project x onto y:  y * (my_dot(x, y) / my_dot(y, y))
-	scal = my_dot(x, y) / my_dot(y, y)
+	# project x onto y:  y * (dot(x, y) / dot(y, y))
+	scal = dot(x, y) / dot(y, y)
 	# out = tuple(y_ * scal for y_ in y)
 	return y[0]*scal, y[1]*scal, y[2]*scal
 
 
-def my_cross_product(a: Sequence[float], b: Sequence[float]) -> Tuple[float,float,float]:
+def cross_product(a: Sequence[float], b: Sequence[float]) -> Tuple[float,float,float]:
 	"""
 	Perform mathematical cross product between two 3D vectors.
 
@@ -123,7 +123,7 @@ def my_cross_product(a: Sequence[float], b: Sequence[float]) -> Tuple[float,floa
 		   a[0]*b[1] - a[1]*b[0]
 
 
-def my_quat_conjugate(q: Sequence[float]) -> Tuple[float,float,float,float]:
+def quat_conjugate(q: Sequence[float]) -> Tuple[float,float,float,float]:
 	"""
 	"invert" or "reverse" or "conjugate" a quaternion by negating the x/y/z components.
 
@@ -133,7 +133,7 @@ def my_quat_conjugate(q: Sequence[float]) -> Tuple[float,float,float,float]:
 	return q[0], -q[1], -q[2], -q[3]
 
 
-def my_slerp(v0: Sequence[float], v1: Sequence[float], t: float) -> Tuple[float,float,float,float]:
+def slerp(v0: Sequence[float], v1: Sequence[float], t: float) -> Tuple[float,float,float,float]:
 	"""
 	Spherically Linear Interpolates between quat1 and quat2 by t.
 	The param t will normally be clamped to the range [0, 1].
@@ -153,7 +153,7 @@ def my_slerp(v0: Sequence[float], v1: Sequence[float], t: float) -> Tuple[float,
 	# If the dot product is negative, the quaternions
 	# have opposite handed-ness and slerp won't take
 	# the shorter path. Fix by reversing one quaternion.
-	dot = my_dot(v0, v1)
+	dot = dot(v0, v1)
 	if dot < 0.0:
 		v1 = [-v for v in v1]
 		dot = -dot
@@ -179,15 +179,15 @@ def my_slerp(v0: Sequence[float], v1: Sequence[float], t: float) -> Tuple[float,
 
 
 def quat_ln(_q: Tuple[float, float, float, float]) -> Tuple[float, float, float, float]:
-	vm = my_euclidian_distance(_q[1:4])
-	qm = my_euclidian_distance(_q)
+	vm = euclidian_distance(_q[1:4])
+	qm = euclidian_distance(_q)
 	tt = (math.acos(_q[0] / qm) / vm) if (vm > 1e-9) else 0.0
 	w = math.log(qm)
 	return w, _q[1] * tt, _q[2] * tt, _q[3] * tt
 
 
 def quat_exp(_q: Tuple[float, float, float, float]) -> Tuple[float, float, float, float]:
-	r = my_euclidian_distance(_q[1:4])
+	r = euclidian_distance(_q[1:4])
 	et = math.exp(_q[0])
 	s = (et * math.sin(r) / r) if (r > 1e-9) else 0.0
 	w = et * math.cos(r)
@@ -320,13 +320,13 @@ def rotate3d(rotate_around: Sequence[float],
 	# subtract "origin" to move the whole system to rotating around 0,0,0
 	point = [p - o for p, o in zip(initial_position, rotate_around)]
 
-	length = my_euclidian_distance(point)
+	length = euclidian_distance(point)
 	if length != 0:
 		point = [p / length for p in point]
 
 		# set up the math as instructed by math.stackexchange
 		p_vect = [0.0] + point
-		r_prime_vect = my_quat_conjugate(angle_quat)
+		r_prime_vect = quat_conjugate(angle_quat)
 		# r_prime_vect = [angle_quat[0], -angle_quat[1], -angle_quat[2], -angle_quat[3]]
 
 		# P' = R * P * R'

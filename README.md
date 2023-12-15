@@ -13,3 +13,4 @@ Edited by. <b>Haoming</b> - <code>2023 Dec.</code>
 - [X] Translation is usable *(GoogleTranslation support is removed)*
 - [X] Separate Core logics
 - [X] Finished organizing `pmx_scripting` files *(ran the `test` function in `pmx_parser` and finished successfully)*
+- [X] All Tools scripts are usable *(Tested with synthetic data)*

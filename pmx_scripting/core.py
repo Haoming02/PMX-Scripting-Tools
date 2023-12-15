@@ -299,6 +299,18 @@ def general_input(valid_check: Callable[[str], bool], explain_info=None) -> str:
 	return s
 
 
+def remove_quotes(input_string:str):
+	"""
+	When you drag a file that contains spaces in its path to the console, Windows surrounds it with quotations, which breaks the logics
+	This function removes them~
+	"""
+
+	if (input_string.startswith('"') and input_string.endswith('"')) or (input_string.startswith("'") and input_string.endswith("'")):
+		return input_string[1:-1]
+	else:
+		return input_string
+
+
 def prompt_user_filename(label: str, ext_list: Union[str,Sequence[str]]) -> str:
 	"""
 	CONSOLE FUNCTION: prompt for file & continue prompting until user enters the name of an existing file with the
@@ -312,24 +324,26 @@ def prompt_user_filename(label: str, ext_list: Union[str,Sequence[str]]) -> str:
 		# if it comes in as a string, wrap it in a list
 		ext_list = [ext_list]
 
-	MY_PRINT_FUNC('(type/paste the path to the file, ".." means "go up a folder")')
-	MY_PRINT_FUNC('(path can be absolute, like C:/username/Documents/miku.pmx)')
-	MY_PRINT_FUNC('(or path can be relative to here, example: ../../mmd/models/miku.pmx)')
+	MY_PRINT_FUNC('(recommended to just use absolute path)')
 
 	while True:
 		# continue prompting until the user gives valid input
 		if ext_list:
-			name = input(" {:s} path ending with [{:s}] = ".format(label, ", ".join(ext_list)))
+			name = input("\n > {:s} path ending with [{:s}] = ".format(label, ", ".join(ext_list)))
+			name = remove_quotes(name)
 			valid_ext = any(name.lower().endswith(a.lower()) for a in ext_list)
+
 			if not valid_ext:
 				MY_PRINT_FUNC("Err: given file does not have acceptable extension")
 				continue
+
 		else:
 			# if given an empty sequence, then do not check for valid extension. accept anything.
-			name = input(" {:s} path = ".format(label))
+			name = input("  {:s} path = ".format(label))
+			name = remove_quotes(name)
 
 		if not path.isfile(name):
-			MY_PRINT_FUNC("Err: given name is not a file, did you type it wrong?")
+			MY_PRINT_FUNC("Error: given path is not a file, did you type it wrong?")
 			abspath = path.abspath(name)
 			# find the point where the filepath breaks! walk up folders 1 by 1 until i find the last place where the path was valid
 			c = abspath
