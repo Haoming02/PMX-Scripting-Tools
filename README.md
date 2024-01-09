@@ -16,7 +16,11 @@ This repo also comes with a few ready-to-use tool scripts that utilize said pack
 - **Python**
 
 <ins>**For simple End Users**</ins><br>
-It's recommended to use the original repo, which comes with a graphical user interface
+It's recommended to use the original repo, which comes with a graphical user interface instead;
+unless you want to use any of the [scripts](#new-scripts) I wrote of course
 
 <ins>**For advanced Developers**</ins><br>
 Import the scripts in the `pmx_scripting` folder to easily interface with `.pmx` files
+
+## New Scripts
+- **parse_group_morph.py**: Convert `Group Morphs` into normal `Morphs` so that they are not lost when converting to other formats.
