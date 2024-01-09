@@ -1,16 +1,22 @@
 # PMX Scripting Tools
-> All VMD-Related Scripts are/will be Removed~
-
 <p align="right"><i>
 Original Author: <b><a href="https://github.com/Nuthouse01/PMX-VMD-Scripting-Tools">Nuthouse01</a></b><br>
-Edited by. <b>Haoming</b> - <code>2023 Dec.</code>
+Updated by. <b>Haoming</b> - <code>2024 Jan.</code>
 </i></p>
 
-<h1 align="center">W.I.P</h1>
-<p align="center">Planning to organize and modularize the scripts for easier usages</p>
+A package for reading, parsing, and modifying the data of PMX models, written in Python.
+This repo also comes with a few ready-to-use tool scripts that utilize said package to improve existing models.
 
-#### Progress
-- [X] Translation is usable *(GoogleTranslation support is removed)*
-- [X] Separate Core logics
-- [X] Finished organizing `pmx_scripting` files *(ran the `test` function in `pmx_parser` and finished successfully)*
-- [X] All Tools scripts are usable *(Tested with synthetic data)*
+### Main Differences
+- The core scripts were modularized and cleaned up 
+- VMD-related scripts were removed
+- Google Translation support is removed
+
+### Prerequisite
+- **Python**
+
+<ins>**For simple End Users**</ins><br>
+It's recommended to use the original repo, which comes with a graphical user interface
+
+<ins>**For advanced Developers**</ins><br>
+Import the scripts in the `pmx_scripting` folder to easily interface with `.pmx` files

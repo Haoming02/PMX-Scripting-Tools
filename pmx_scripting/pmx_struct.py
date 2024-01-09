@@ -68,7 +68,7 @@ class _BasePmx(abc.ABC):
 			# print some more selective stack trace info to the GUI
 			# maybe print the whole stack trace to GUI console? it formats just fine
 			lowesttrace = something[-1]
-			MY_PRINT_FUNC('VALIDATE ERROR: Object "{}" failed validation check "{}" at line "{}" in nuthouse01_pmx_struct.py'.format(
+			MY_PRINT_FUNC('VALIDATE ERROR: Object "{}" failed validation check "{}" at line "{}" in pmx_struct.py'.format(
 				self.__class__.__name__, lowesttrace.line, lowesttrace.lineno
 			))
 			MY_PRINT_FUNC("This happens when the PMX/VMD object has incorrect data sizes/types.")
