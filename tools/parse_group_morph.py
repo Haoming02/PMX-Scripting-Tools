@@ -46,7 +46,11 @@ def parse_morph(pmx: pmxstruct.Pmx):
 					# Hope no one groups multiple types of morphs together (Is it even possible?)
 					assert (target_type == child_morph.morphtype)
 
-				# Deep Copy to avoid repeated calculation
+				# Ignore 0 impact entries
+				if abs(ratio) < 0.00001:
+					continue
+
+				# Deep Copy to avoid stacking repeated calculation on the same morph
 				child_weights = copy.deepcopy(child_morph.items)
 
 				# Apply the Impact set in the group morph
@@ -69,6 +73,8 @@ def parse_morph(pmx: pmxstruct.Pmx):
 						raise NotImplementedError(f'Type: {type(ci)}')
 
 				weights_list += child_weights
+
+			assert(target_type is not None)
 
 			# Change the type of the main morph
 			mp.morphtype = target_type
