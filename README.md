@@ -26,3 +26,4 @@ Import the scripts in the `pmx_scripting` folder to easily interface with `.pmx`
 - **parse_group_morph.py**: Convert `Group Morphs` into normal `Morphs` so that they are not lost when converting to other formats.
 - **duplicate_group_morph.py**: Copy `Group Morphs` from one model to another, based on the name of the morphs.
 - **list_bone_children.py**: List all children bones of the bone with the given index, to avoid breaking hierarchy when deleting bones.
+- **edge_bone_detection.py**: Identify Bones at questionable positions that may require manual fixing.
