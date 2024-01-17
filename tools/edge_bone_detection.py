@@ -23,7 +23,11 @@ ERROR = {
 	'height': [],
 	'oplimb': [],
 	'length': [],
+	'pczero': [],
 }
+
+def sub(a:list, b:list) -> list:
+	return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
 
 def list_bone(pmx: pmxstruct.Pmx):
 	"""
@@ -61,8 +65,12 @@ def list_bone(pmx: pmxstruct.Pmx):
 			ERROR['oplimb'].append(f'[{i}]: {bone.name_jp.strip()}')
 
 		# 4. Bones too "long"
-		if euclidian_distance(bone.tail) > LENGTH_THRESHOLD:
+		if (not bone.tail_usebonelink) and euclidian_distance(bone.tail) > LENGTH_THRESHOLD:
 			ERROR['length'].append(f'[{i}]: {bone.name_jp.strip()}')
+
+		# 5. Bones with 0 Offsets
+		if bone.tail_usebonelink and euclidian_distance(sub(bone.pos, pmx.bones[bone.tail].pos)) < (CENTER_THRESHOLD / 10.0):
+			ERROR['pczero'].append(f'[{i}]: {bone.name_jp.strip()}')
 
 
 	if len(ERROR['center']) > 0:
@@ -83,6 +91,11 @@ def list_bone(pmx: pmxstruct.Pmx):
 	if len(ERROR['length']) > 0:
 		core.MY_PRINT_FUNC('\n===== Bones too Long =====')
 		for line in ERROR['length']:
+			core.MY_PRINT_FUNC(line)
+
+	if len(ERROR['pczero']) > 0:
+		core.MY_PRINT_FUNC('\n===== Bones too short =====')
+		for line in ERROR['pczero']:
 			core.MY_PRINT_FUNC(line)
 
 	core.MY_PRINT_FUNC('')
