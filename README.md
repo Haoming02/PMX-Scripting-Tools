@@ -29,3 +29,8 @@ Import the scripts in the `pmx_scripting` folder to easily interface with `.pmx`
 - **list_bone_children_recuv.py**: List the chains of all children bones.
 - **edge_bone_detection.py**: Identify Bones at questionable positions that may require manual fixing.
 - **link_bones.py**: Convert a bone's offsets into link, if the offsets fall on the position of the child bone.
+- **duplicate_bone_weight.py**: Copy Vertex Weights related to the specified Bone one model to another. Requires the mapping of the Bone index.
+
+#### Destructive Scripts
+- **precision_bone_fix.py**: Parse all out-of-place bones at a given position, and connect its children to its parent, thus removing the out-of-place bones.
+- **consolidate_bones.py**: [for KK only] Remove useless zero offset bones.
