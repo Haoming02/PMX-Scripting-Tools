@@ -8,7 +8,7 @@ from pmx_scripting import pmx_struct as pmxstruct
 from pmx_scripting.maths import normalize_sum, euclidian_distance, cross_product, normalize_distance
 from typing import List, Tuple
 
-from common import main
+from common import main, EPSILON
 
 helptext = '''> weight_cleanup:
 This function will fix the vertex weights that are weighted twice to the same bone, which sometimes happens when merging bones.
@@ -16,9 +16,6 @@ This also normalizes the weights of all vertices, and normalizes the normal vect
 Finally, it removes weight for any bones that have <0.001% weight, because it's imperceptible anyways.
 '''
 
-
-# epsilon: a number very close to zero. weights below this value become zero.
-EPSILON = 0.00001  # = 0.001%
 
 WEIGHTTYPE_TO_LEN = {
 	pmxstruct.WeightMode.BDEF1:1,

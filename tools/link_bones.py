@@ -5,31 +5,24 @@ if __name__ == '__main__':
 
 from pmx_scripting import core
 from pmx_scripting import pmx_struct as pmxstruct
-from pmx_scripting.maths import euclidian_distance
 
-from common import main
+from common import main, add, on_point
 
 helptext = '''> link_bones:
-Convert a bone's offsets into link, if the offsets fall on the position of the child bone
+Convert a Bone's offsets into a link, if the offsets fall on the position of the child bone
 '''
 
 
-THRESHOLD = 0.0001
-
-def add(a:list, b:list) -> list:
-	return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]
-
-def sub(a:list, b:list) -> list:
-	return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
-
-def on_point(a:list, b:list) -> bool:
-	return euclidian_distance(sub(a, b)) < THRESHOLD
-
 def link_bone(pmx: pmxstruct.Pmx):
+	"""
+	Loop through all bones in a PMX model;
+	calculate its offset position in relation to its child
+	"""
 
-	flag = False
+	is_changed = False
 
 	for i, child in reversed(list(enumerate(pmx.bones))):
+		# All bones except for "全ての親" should have a parent
 		if child.parent_idx < 0 and i > 0:
 			raise SystemError
 
@@ -42,10 +35,11 @@ def link_bone(pmx: pmxstruct.Pmx):
 			parent.tail = [0, 0, 0]
 			parent.tail = i
 			parent.tail_usebonelink = True
-			flag = True
+			is_changed = True
 
 	# Only save if something was changed
-	return pmx, flag
+	return pmx, is_changed
+
 
 if __name__ == '__main__':
 	core.RUN_WITH_TRACEBACK(main, helptext, '_linked', link_bone)

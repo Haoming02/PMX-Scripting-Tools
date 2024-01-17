@@ -12,6 +12,7 @@ helptext = '''> uniquify_names:
 This function will uniquify all names of materials/bones/morphs/displayframes in the model. Bad things happen when names are not unique.
 '''
 
+
 # Uniquifing empty names just turns them into "*1" "*2" "*3", etc
 # which is argubaly even less useful than the default "Null_01" "Null_02" "Null_03" MMD turns them into
 ALSO_UNIQUIFY_NULL_NAMES = False

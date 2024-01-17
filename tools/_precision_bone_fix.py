@@ -5,56 +5,23 @@ if __name__ == '__main__':
 
 from pmx_scripting import core
 from pmx_scripting import pmx_struct as pmxstruct
-from pmx_scripting.maths import euclidian_distance
 from pmx_scripting.pmx_utils import delete_multiple_bones
 
-from common import main
+from common import main, recuv_search, on_point, test_int, test_float
 
 helptext = '''> precision_bone_fix:
+[for Manual only]
 Parse all out-of-place bones at a given position,
 and connect its children to its parent,
-thus removing the out-of-place bones.
+then remove the out-of-place bones.
 '''
 
 
-THRESHOLD = 0.0001
-
-def sub(a:list, b:list) -> list:
-	return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
-
-def on_point(a:list, b:list) -> bool:
-	return euclidian_distance(sub(a, b)) < THRESHOLD
-
-def test_int(x:str):
-	try:
-		int(x)
-	except ValueError:
-		return False
-
-	return True
-
-def test_float(x:str):
-	try:
-		float(x)
-	except ValueError:
-		return False
-
-	return True
-
 def is_zeroOffset(pmx, bone) -> bool:
 	if bone.tail_usebonelink:
-		return euclidian_distance(sub(bone.pos, pmx.bones[bone.tail].pos)) < THRESHOLD
+		return on_point(bone.pos, pmx.bones[bone.tail].pos)
 	else:
-		return euclidian_distance(bone.tail) < THRESHOLD
-
-def recuv_search(pmx, index):
-	children = [
-		i for i, bone in enumerate(pmx.bones[index:], start=index)
-		if bone.parent_idx == index
-	]
-
-	assert len(children) > 0
-	return children
+		return on_point(bone.tail, [0, 0, 0])
 
 def trace_parent(pmx, bone, target):
 	limit = 5
@@ -116,16 +83,18 @@ def fix_bones(pmx: pmxstruct.Pmx):
 
 	to_del = sorted(list(to_del))
 
+	if len(to_del) == 0:
+		return None, False
+
 	for v in pmx.verts:
-		for pair in v.weight:
-			if pair[0] in to_del:
-				pair[0] = common
+		for entry in v.weight:
+			if entry[0] in to_del:
+				entry[0] = common
 
 	delete_multiple_bones(pmx, to_del)
 
-	#core.MY_PRINT_FUNC('')
-	#return None, False
 	return pmx, True
+
 
 if __name__ == '__main__':
 	core.RUN_WITH_TRACEBACK(main, helptext, '_precision', fix_bones)

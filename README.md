@@ -23,14 +23,15 @@ unless you want to use any of the [scripts](#new-scripts) I wrote of course
 Import the scripts in the `pmx_scripting` folder to easily interface with `.pmx` files
 
 ## New Scripts
-- **parse_group_morph.py**: Convert `Group Morphs` into normal `Morphs` so that they are not lost when converting to other formats.
-- **duplicate_group_morph.py**: Copy `Group Morphs` from one model to another, based on the name of the morphs.
-- **list_bone_children.py**: List all children bones of the bone with the given index, to avoid breaking hierarchy when deleting bones.
-- **list_bone_children_recuv.py**: List the chains of all children bones.
-- **edge_bone_detection.py**: Identify Bones at questionable positions that may require manual fixing.
-- **link_bones.py**: Convert a bone's offsets into link, if the offsets fall on the position of the child bone.
-- **duplicate_bone_weight.py**: Copy Vertex Weights related to the specified Bone one model to another. Requires the mapping of the Bone index.
+> These scripts were only written to my specific needs, and have not gone through extensive testing. They may not work on all models.
+- **copy_bone_weight.py**: Copy the `Vertex Weights` related to the specified `Bone` from one model to another.
+- **copy_group_morph.py**: Copy `Group Morphs` from one model to another, based on the name of the morphs.
+- **edge_bone_detection.py**: Identify `Bones` at questionable positions that may require manual fixing.
+- **link_bones.py**: Convert a `Bone`'s offsets into a link, if the offsets fall on the position of its child bone.
+- **list_bone_children.py**: Given an index to a `Bone`, list out the chains of all its children bones.
+- **parse_group_morph.py**: Convert `Group Morphs` into normal Morphs, so that they are not lost when converting to other formats.
 
 #### Destructive Scripts
-- **precision_bone_fix.py**: Parse all out-of-place bones at a given position, and connect its children to its parent, thus removing the out-of-place bones.
-- **consolidate_bones.py**: [for KK only] Remove useless zero offset bones.
+> Do **NOT** use these scripts unless you're 100% sure what they do
+- **consolidate_bones.py**
+- **precision_bone_fix.py**
